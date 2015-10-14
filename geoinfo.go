@@ -30,6 +30,11 @@ func (gi *Geoinfo) IPDistance(ip1, ip2 string) float64 {
 	return p.GreatCircleDistance(p2)
 }
 
+func (gi *Geoinfo) GetCountryByIP(ip string) string {
+	item := gi.getCity(ip)
+	return item.Subdivisions[0].Names["en"]
+}
+
 func (gi *Geoinfo) getCity(ip string) *geoip2.City {
 	db, err := geoip2.Open(gi.Path)
 	if err != nil {
