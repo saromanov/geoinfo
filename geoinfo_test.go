@@ -19,3 +19,12 @@ func TestIPDistance(t *testing.T) {
 	}
 
 }
+
+func TestGetCountryByIP(t *testing.T) {
+	info := Geoinfo{Path: "../GeoLite2-City.mmdb"}
+	result1 := info.GetCountryByIP("87.240.131.118")
+	expected := "Russia"
+	if result1 != expected {
+		t.Errorf("Expected %s is not equal to %s", expected, result1)
+	}
+}
