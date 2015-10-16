@@ -28,3 +28,18 @@ func TestGetCountryByIP(t *testing.T) {
 		t.Errorf("Expected %s is not equal to %s", expected, result1)
 	}
 }
+
+func TestGetPointByIP(t *testing.T) {
+	lat := 61.52401
+	long := 105.318756
+	info := Geoinfo{Path: "../GeoLite2-City.mmdb"}
+	result, err := info.GetPointByIP("87.240.131.118")
+	if err != nil {
+		t.Error(err)
+	}
+	reslat := result.Lat()
+	reslong := result.Lng()
+	if reslat != lat || reslong != long {
+		t.Errorf("Expected on GetPointByIP is not equal")
+	}
+}

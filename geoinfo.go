@@ -5,6 +5,8 @@ import (
 	"github.com/oschwald/geoip2-golang"
 	"log"
 	"net"
+	"net/http"
+	"time"
 )
 
 type Geoinfo struct {
@@ -34,6 +36,12 @@ func (gi *Geoinfo) IPDistance(ip1, ip2 string) float64 {
 func (gi *Geoinfo) GetCountryByIP(ip string) string {
 	item := gi.getCity(ip)
 	return item.Country.Names["en"]
+}
+
+func (gi *Geoinfo) GetPointByIP(ip string) (*geo.Point, error) {
+	item := gi.getCity(ip)
+	geocoder := geo.GoogleGeocoder{&http.Client{Timeout: time.Duration(5 * time.Second)}}
+	return geocoder.Geocode(item.Country.Names["en"])
 }
 
 func (gi *Geoinfo) getCity(ip string) *geoip2.City {
