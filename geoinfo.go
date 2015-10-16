@@ -38,6 +38,7 @@ func (gi *Geoinfo) GetCountryByIP(ip string) string {
 	return item.Country.Names["en"]
 }
 
+//GetPointByIP return Point{Lat, Long} from location by IP
 func (gi *Geoinfo) GetPointByIP(ip string) (*geo.Point, error) {
 	item := gi.getCity(ip)
 	geocoder := geo.GoogleGeocoder{&http.Client{Timeout: time.Duration(5 * time.Second)}}
